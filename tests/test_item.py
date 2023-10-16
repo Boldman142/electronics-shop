@@ -17,3 +17,13 @@ def test_pay_rate():
     Item.pay_rate = 0.8
     item1.apply_discount()
     assert item1.price == 8000
+
+
+def test_name():
+    assert item1.name == "Смартфон"
+    item1.name = "Телефон"
+    assert item1.name == "Телефон"
+
+
+def test_string_to_number():
+    assert Item.string_to_number("8.1") == 8

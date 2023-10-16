@@ -1,3 +1,7 @@
+import csv
+from math import trunc
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -11,10 +15,11 @@ class Item:
         Создание экземпляра класса item.
 
         :param name: Название товара.
-        :param price: Цена за единицу товара.
+        :param price: Цена за
+        единицу товара.
         :param quantity: Количество товара в магазине.
         """
-        self.name = name
+        self.__name = name
         self.price = price
         self.quantity = quantity
         Item.all.append(self)
@@ -22,7 +27,9 @@ class Item:
 
     def calculate_total_price(self) -> float:
         """
-        Рассчитывает общую стоимость конкретного товара в магазине.
+        Рассчитывает общую стоимость
+        конкретного
+        товара в магазине.
 
         :return: Общая стоимость товара.
         """
@@ -34,3 +41,31 @@ class Item:
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= self.pay_rate
+
+
+    @property
+
+
+    def name(self):
+        return self.__name
+
+    @name.setter
+
+
+    def name(self, new_name):
+        if len(new_name) > 10:
+            new_name = new_name[0:10]
+        self.__name = new_name
+
+    @classmethod
+    def instantiate_from_csv(cls, path):
+        with open(path) as csv_file:
+            reader = csv.DictReader(csv_file)
+            for new in reader:
+                item_ = Item(new, 1.1, 1)
+
+    @staticmethod
+
+
+    def string_to_number(string):
+        return trunc(float(string))

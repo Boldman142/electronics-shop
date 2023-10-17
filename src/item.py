@@ -10,7 +10,6 @@ class Item:
     pay_rate = 1.0
     all = []
 
-
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
         Создание экземпляра класса item.
@@ -25,7 +24,6 @@ class Item:
         self.quantity = quantity
         Item.all.append(self)
 
-
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость
@@ -36,23 +34,17 @@ class Item:
         """
         return self.price * self.quantity
 
-
     def apply_discount(self) -> None:
         """
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= self.pay_rate
 
-
     @property
-
-
     def name(self):
         return self.__name
 
     @name.setter
-
-
     def name(self, new_name):
         if len(new_name) > 10:
             new_name = new_name[0:10]
@@ -63,14 +55,12 @@ class Item:
         cls.all = []
         path_part = path.split("/")
         path_file = os.path.join("..", path_part[0], path_part[1])
-        with open(path_file,  encoding='windows-1251', newline='') as csv_file:
+        with open(path_file, encoding='windows-1251', newline='') as csv_file:
             reader = csv.DictReader(csv_file)
             for new in reader:
                 name, price, quantity = dict.values(new)
-                item_ = Item(name, price, quantity)
+                Item(name, price, quantity)
 
     @staticmethod
-
-
     def string_to_number(string):
         return trunc(float(string))

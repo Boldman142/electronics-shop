@@ -1,4 +1,5 @@
 import csv
+import os
 from math import trunc
 
 
@@ -59,10 +60,14 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, path):
-        with open(path) as csv_file:
+        cls.all = []
+        path_part = path.split("/")
+        path_file = os.path.join("..", path_part[0], path_part[1])
+        with open(path_file,  encoding='windows-1251', newline='') as csv_file:
             reader = csv.DictReader(csv_file)
             for new in reader:
-                item_ = Item(new, 1.1, 1)
+                name, price, quantity = dict.values(new)
+                item_ = Item(name, price, quantity)
 
     @staticmethod
 

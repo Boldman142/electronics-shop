@@ -1,9 +1,11 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 from src.item import Item
 from homework_1.main import main
+from src.phone import Phone
 
 item1 = Item("Смартфон", 10000, 20)
 item2 = Item("Ноутбук", 20000, 5)
+phone1 = Phone("iPhone 14", 120_000, 5, 2)
 
 
 def test_repr():
@@ -34,3 +36,7 @@ def test_name():
 
 def test_string_to_number():
     assert Item.string_to_number("8.1") == 8
+
+
+def test_add():
+    assert phone1 + item1 == 25

@@ -15,12 +15,6 @@ class Phone(Item):
     def __str__(self):
         return super().__str__()
 
-    def __add__(self, other):
-        if issubclass(self.__class__, other.__class__):
-            return self.quantity + other.quantity
-        else:
-            return "Это не экземпляры одних классов/надклассов"
-
     @property
     def number_of_sim(self):
         return self.__number_of_sim

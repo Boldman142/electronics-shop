@@ -3,6 +3,10 @@ import os
 from math import trunc
 
 
+class InstantiateCSVError(Exception):
+    print("Файл item.csv поврежден")
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -63,15 +67,28 @@ class Item:
         self.__name = new_name
 
     @classmethod
-    def instantiate_from_csv(cls, path):
+    def instantiate_from_csv(cls, path="src/aitems.csv"):
         cls.all = []
-        path_part = path.split("/")
-        path_file = os.path.join("..", path_part[0], path_part[1])
-        with open(path_file, encoding='windows-1251', newline='') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for new in reader:
-                name, price, quantity = dict.values(new)
-                Item(name, price, quantity)
+        try:
+            path_part = path.split("/")
+            path_file = os.path.join("..", path_part[0], path_part[1])
+            try_file = open(path_file)
+            try_file.close()
+        except FileNotFoundError:
+            print("Отсутствует файл item.csv")
+        else:
+            with open(path_file, encoding='windows-1251', newline='') as csv_file:
+                reader = csv.DictReader(csv_file)
+                for new in reader:
+                    try:
+                        assert len(dict.values(new)) == 3
+
+                        print(len(dict.values(new)))
+                    except AssertionError:
+                        raise InstantiateCSVError
+                    else:
+                        name, price, quantity = dict.values(new)
+                        Item(name, price, quantity)
 
     @staticmethod
     def string_to_number(string):

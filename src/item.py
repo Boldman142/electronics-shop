@@ -31,7 +31,7 @@ class Item:
         return self.__name
 
     def __add__(self, other):
-        if issubclass(other.__class__, self.__class__):
+        if issubclass(self.__class__, other.__class__):
             return self.quantity + other.quantity
         else:
             return "Это не экземпляры одних классов/надклассов"

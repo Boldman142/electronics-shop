@@ -67,28 +67,32 @@ class Item:
         self.__name = new_name
 
     @classmethod
-    def instantiate_from_csv(cls, path="src/aitems.csv"):
+    def instantiate_from_csv(cls, path="src/qitems.csv"):
         cls.all = []
         try:
             path_part = path.split("/")
             path_file = os.path.join("..", path_part[0], path_part[1])
-            try_file = open(path_file)
-            try_file.close()
-        except FileNotFoundError:
-            print("Отсутствует файл item.csv")
-        else:
+            # try_file = open(path_file)
+            # try_file.close()
             with open(path_file, encoding='windows-1251', newline='') as csv_file:
                 reader = csv.DictReader(csv_file)
                 for new in reader:
-                    try:
-                        assert len(dict.values(new)) == 3
+                    # try:
+                    #     assert len(dict.values(new)) == 3
+                    #
+                    #     print(len(dict.values(new)))
+                    # except AssertionError:
+                    #     raise InstantiateCSVError
+                    # else:
+                    name, price, quantity = dict.values(new)
+                    Item(name, price, quantity)
+        except FileNotFoundError:
+            raise FileNotFoundError('Отсутствует файл item.csv')
+            # print("Отсутствует файл item.csv")
+        except (ValueError, KeyError, AttributeError):
+            raise InstantiateCSVError()
+        # else:
 
-                        print(len(dict.values(new)))
-                    except AssertionError:
-                        raise InstantiateCSVError
-                    else:
-                        name, price, quantity = dict.values(new)
-                        Item(name, price, quantity)
 
     @staticmethod
     def string_to_number(string):

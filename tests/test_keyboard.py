@@ -1,12 +1,18 @@
 from src.keyboard import Keyboard
 
-kb = Keyboard('Dark Project KD87A', 9600, 5)
-assert str(kb) == "Dark Project KD87A"
 
-assert str(kb.language) == "EN"
+def test_init_lang():
+    kb = Keyboard('Dark Project KD87A', 9600, 5)
+    assert kb.language == "EN"
+    assert kb.name == 'Dark Project KD87A'
+    assert kb.price == 9600
+    assert kb.quantity == 5
 
-kb.change_lang()
-assert str(kb.language) == "RU"
 
-kb.change_lang()
-assert str(kb.language) == "EN"
+def test_change_lang():
+    new_kb = Keyboard("name", 1000, 3)
+    assert new_kb.language == "EN"
+    new_kb.change_lang()
+    assert new_kb.language == "RU"
+    new_kb.change_lang()
+    assert new_kb.language == "EN"

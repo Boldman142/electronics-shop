@@ -4,7 +4,13 @@ from math import trunc
 
 
 class InstantiateCSVError(Exception):
-    pass
+
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else "Файл item.csv поврежден"
+
+    def __str__(self):
+        return self.message
+
     # print("Файл item.csv поврежден")
 
 
@@ -107,18 +113,22 @@ class Item:
             path_file = os.path.join("..", path_part[0], path_part[1])
             with open(path_file, encoding='windows-1251', newline='') as csv_file:
                 reader = csv.DictReader(csv_file)
+                if reader.fieldnames != ['name', 'price', 'quantity']:
+                    raise InstantiateCSVError()
                 for new in reader:
-                    name, price, quantity = dict.values(new)
-                    Item(name, price, quantity)
-                    # Item(
-                    #     name=new['name'],
-                    #     price=new['price'],
-                    #     quantity=new['quantity']
-                    # )
+                    # name, price, quantity = dict.values(new)
+                    # Item(name, price, quantity)
+                    Item(
+                        name=new['name'],
+                        price=new['price'],
+                        quantity=new['quantity']
+                    )
         except FileNotFoundError:
-            raise FileNotFoundError('Отсутствует файл item.csv')
-        except (ValueError, KeyError, AttributeError):
-            raise InstantiateCSVError("Файл item.csv поврежден")
+            print('Отсутствует файл item.csv')
+            # raise FileNotFoundError('Отсутствует файл item.csv')
+        except InstantiateCSVError as error:
+            print(error)
+            return None
 
     @staticmethod
     def string_to_number(string):

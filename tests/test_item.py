@@ -40,3 +40,7 @@ def test_string_to_number():
 
 def test_add():
     assert phone1 + item1 == 25
+
+
+def test_file_not_found():
+    assert Item.instantiate_from_csv() == print('Отсутствует файл item.csv')

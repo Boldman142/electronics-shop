@@ -81,7 +81,8 @@ class Item:
     #         path_file = os.path.join("..", path_part[0], path_part[1])
     #         # try_file = open(path_file)
     #         # try_file.close()
-    #         with open(path_file, encoding='windows-1251', newline='') as csv_file:
+    #         with open(path_file, encoding='windows-1251',
+    #         newline='') as csv_file:
     #             reader = csv.DictReader(csv_file)
     #             for new in reader:
     #                 # try:
@@ -111,7 +112,8 @@ class Item:
         try:
             path_part = path.split("/")
             path_file = os.path.join("..", path_part[0], path_part[1])
-            with open(path_file, encoding='windows-1251', newline='') as csv_file:
+            with open(path_file, encoding='windows-1251',
+                      newline='') as csv_file:
                 reader = csv.DictReader(csv_file)
                 if reader.fieldnames != ['name', 'price', 'quantity']:
                     raise InstantiateCSVError()

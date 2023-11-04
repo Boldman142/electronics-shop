@@ -4,7 +4,8 @@ from math import trunc
 
 
 class InstantiateCSVError(Exception):
-    print("Файл item.csv поврежден")
+    pass
+    # print("Файл item.csv поврежден")
 
 
 class Item:
@@ -66,33 +67,58 @@ class Item:
             new_name = new_name[0:10]
         self.__name = new_name
 
+    # @classmethod
+    # def instantiate_from_csv(cls, path="qsrc/items.csv"):
+    #     cls.all = []
+    #     try:
+    #         path_part = path.split("/")
+    #         path_file = os.path.join("..", path_part[0], path_part[1])
+    #         # try_file = open(path_file)
+    #         # try_file.close()
+    #         with open(path_file, encoding='windows-1251', newline='') as csv_file:
+    #             reader = csv.DictReader(csv_file)
+    #             for new in reader:
+    #                 # try:
+    #                 #     assert len(dict.values(new)) == 3
+    #                 #
+    #                 #     print(len(dict.values(new)))
+    #                 # except AssertionError:
+    #                 #     raise InstantiateCSVError
+    #                 # else:
+    #                 # name, price, quantity = dict.values(new)
+    #                 # Item(name, price, quantity)
+    #                 Item(
+    #                     name=new['name'],
+    #                     price=new['price'],
+    #                     quantity=new['quantity']
+    #                 )
+    #     except FileNotFoundError:
+    #         raise FileNotFoundError('Отсутствует файл item.csv')
+    #         # print("Отсутствует файл item.csv")
+    #     except (ValueError, KeyError, AttributeError):
+    #         raise InstantiateCSVError("Файл item.csv поврежден")
+    #     # else:
+
     @classmethod
-    def instantiate_from_csv(cls, path="src/qitems.csv"):
+    def instantiate_from_csv(cls, path="src/items.csv"):
         cls.all = []
         try:
             path_part = path.split("/")
             path_file = os.path.join("..", path_part[0], path_part[1])
-            # try_file = open(path_file)
-            # try_file.close()
             with open(path_file, encoding='windows-1251', newline='') as csv_file:
                 reader = csv.DictReader(csv_file)
                 for new in reader:
-                    # try:
-                    #     assert len(dict.values(new)) == 3
-                    #
-                    #     print(len(dict.values(new)))
-                    # except AssertionError:
-                    #     raise InstantiateCSVError
-                    # else:
                     name, price, quantity = dict.values(new)
                     Item(name, price, quantity)
+                    # Item(
+                    #     name=new['name'],
+                    #     price=new['price'],
+                    #     quantity=new['quantity']
+                    # )
         except FileNotFoundError:
             raise FileNotFoundError('Отсутствует файл item.csv')
-            # print("Отсутствует файл item.csv")
         except (ValueError, KeyError, AttributeError):
-            raise InstantiateCSVError()
-        # else:
-
+            raise InstantiateCSVError("Файл item.csv поврежден")
 
     @staticmethod
     def string_to_number(string):
